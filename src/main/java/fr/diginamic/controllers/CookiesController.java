@@ -1,8 +1,9 @@
+/**
+ * 
+ */
 package fr.diginamic.controllers;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,24 +12,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = "/extraire/*")
-public class ExtraireDonneesController extends HttpServlet {
+/**
+ *
+ */
+@WebServlet(urlPatterns = "/cookies/*")
+public class CookiesController extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse rep) throws ServletException, IOException {
 		// Récupérer la session existante ou création d'une session
 		HttpSession session = req.getSession(true);
+		// Récupérer une valeur stockée
+		Object utilisateur = session.getAttribute("utilisateur1");
+		// Invalider une session
+		// session.invalidate();
 
-		Map<Integer, String> user1 = new HashMap<>();
-		user1.put(1, "John");
-
-		// Stocker un utilisateur
-		session.setAttribute("utilisateur1", user1);
-
-		// Durée d'inactivité avant invalidation de la session
-		session.setMaxInactiveInterval(10000);
-
-		rep.getWriter().write("<a href='http://localhost:8080/off-web/cookies'>Infos cookies.</a>");
+		// Identifiant de la session
+		String sessionID = session.getId();
+		rep.getWriter().write("<h1>Utilisateur connecté</h1>" + "<ul>" + "<li>utilisateur : " + utilisateur + "</li>"
+				+ "<li>sessionID : " + sessionID + "</li>" + "</ul>");
 
 	}
 }
