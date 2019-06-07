@@ -24,6 +24,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>open-food-facts-web</finalName>
+		<finalName>off-web</finalName>
 	</build>
 </project>
