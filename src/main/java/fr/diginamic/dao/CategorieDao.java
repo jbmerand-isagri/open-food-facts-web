@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -30,38 +29,6 @@ public class CategorieDao {
 	 */
 	public CategorieDao() {
 		super();
-	}
-
-	/**
-	 * ajoute toute les catégories à la base
-	 * 
-	 * @param listeCategorie hashSet des catégories
-	 */
-	public void ajouterAllCategorie(HashSet<String> listeCategorie) {
-
-		PreparedStatement insertCategorie = null;
-		try {
-			insertCategorie = ConnectionUtils.getInstance()
-					.prepareStatement("insert into categorie (CTG_NOM) values (?)");
-			for (String categorie : listeCategorie) {
-				insertCategorie.setString(1, categorie);
-				insertCategorie.executeUpdate();
-			}
-			ConnectionUtils.doCommit();
-		} catch (SQLException e) {
-			ConnectionUtils.doRollback();
-			throw new TechnicalException("probleme d'insertion en base de données", e);
-		} finally {
-			if (insertCategorie != null) {
-				try {
-					insertCategorie.close();
-				} catch (SQLException e) {
-					throw new TechnicalException("impossible de fermer le preparedStatement", e);
-				}
-			}
-			ConnectionUtils.doClose();
-		}
-
 	}
 
 	/**

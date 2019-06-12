@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -33,43 +32,10 @@ public class IngredientDao {
 	}
 
 	/**
-	 * ajoute tous les ingrédients en base de données
-	 * 
-	 * @param listeIngredient hashSet des ingrédients
-	 */
-	public void ajouterAllIngredient(HashSet<String> listeIngredient) {
-
-		PreparedStatement insertIngredient = null;
-		try {
-			insertIngredient = ConnectionUtils.getInstance()
-					.prepareStatement("insert into ingredient (ING_NOM) values (?)");
-			for (String ingredient : listeIngredient) {
-				insertIngredient.setString(1, ingredient);
-				insertIngredient.executeUpdate();
-			}
-			ConnectionUtils.doCommit();
-
-		} catch (SQLException e) {
-			ConnectionUtils.doRollback();
-			throw new TechnicalException("probleme d'insertion en base de données", e);
-		} finally {
-			if (insertIngredient != null) {
-				try {
-					insertIngredient.close();
-				} catch (SQLException e) {
-					throw new TechnicalException("impossible de fermer le preparedStatement", e);
-				}
-			}
-			ConnectionUtils.doClose();
-		}
-
-	}
-
-	/**
 	 * récupère l'identifiant d'un ingrédient par rapport à son nom
 	 * 
-	 * @param nom nom de l'ingrédients
-	 * @return l'identifiant de l'ingrédient
+	 * @param nom : nom de l'ingrédient
+	 * @return : Integer l'identifiant de l'ingrédient
 	 */
 	public Integer recupererIdIngredient(String nom) {
 		PreparedStatement preparedStatement = null;
@@ -112,10 +78,10 @@ public class IngredientDao {
 	}
 
 	/**
-	 * récupère la table d'ingrédient et la stock dans une hashMap avec le nom en
+	 * récupère la table d'ingrédients et la stocke dans une hashMap avec le nom en
 	 * clé et l'identifiant en valeur
 	 * 
-	 * @return ashMap<String, Integer>
+	 * @return : HashMap<String, Integer>
 	 */
 	public HashMap<String, Integer> recupererAllId() {
 
@@ -159,6 +125,13 @@ public class IngredientDao {
 
 	}
 
+	/**
+	 * Permet de récupérer de la base de données une liste des ingrédients pour un
+	 * produit donné.
+	 * 
+	 * @param idDuProduit : Integer ID de la base de données
+	 * @return : List<String> tous les ingrédients du produit
+	 */
 	public List<String> recupererIngredientsDUnProduit(Integer idDuProduit) {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

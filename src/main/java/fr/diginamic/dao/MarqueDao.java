@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -16,8 +15,6 @@ import fr.diginamic.utils.ConnectionUtils;
 /**
  * Dao gérant les marques
  * 
- * @author Kevin.s
- *
  */
 public class MarqueDao {
 
@@ -30,37 +27,6 @@ public class MarqueDao {
 	 */
 	public MarqueDao() {
 		super();
-	}
-
-	/**
-	 * Ajoute toutes les marques dans la base de données
-	 * 
-	 * @param listeMarque hashSet des marques
-	 */
-	public void ajouterAllMarque(HashSet<String> listeMarque) {
-
-		PreparedStatement insertMarque = null;
-		try {
-			insertMarque = ConnectionUtils.getInstance().prepareStatement("insert into marque (MRQ_NOM) values (?)");
-			for (String marque : listeMarque) {
-				insertMarque.setString(1, marque);
-				insertMarque.executeUpdate();
-			}
-			ConnectionUtils.doCommit();
-		} catch (SQLException e) {
-			ConnectionUtils.doRollback();
-			throw new TechnicalException("probleme d'insertion en base de données", e);
-		} finally {
-			if (insertMarque != null) {
-				try {
-					insertMarque.close();
-				} catch (SQLException e) {
-					throw new TechnicalException("impossible de fermer le preparedStatement", e);
-				}
-			}
-			ConnectionUtils.doClose();
-		}
-
 	}
 
 	/**

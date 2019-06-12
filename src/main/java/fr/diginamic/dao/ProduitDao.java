@@ -32,51 +32,10 @@ public class ProduitDao {
 	}
 
 	/**
-	 * ajoute tous les produits à la base de données
-	 * 
-	 * @param listeProduit liste des produits
-	 */
-	public void ajouterAllProduit(List<Produit> listeProduit) {
-
-		PreparedStatement insertProduit = null;
-		try {
-			insertProduit = ConnectionUtils.getInstance().prepareStatement(
-					"insert into produit (PDT_NOM,PDT_CATEGORIE,PDT_MARQUE,PDT_NUTRITIONGRADE,PDT_ENERGIE,PDT_GRAISSE,PDT_SUCRE,PDT_FIBRE,PDT_PROTEINE,PDT_SEL) values (?,?,?,?,?,?,?,?,?,?)");
-			for (Produit produit : listeProduit) {
-				insertProduit.setString(1, produit.getNom());
-				insertProduit.setInt(2, produit.getIdCategorie());
-				insertProduit.setInt(3, produit.getIdMarque());
-				insertProduit.setString(4, produit.getGrade());
-				insertProduit.setDouble(5, produit.getEnergie());
-				insertProduit.setDouble(6, produit.getGraisse());
-				insertProduit.setDouble(7, produit.getSurcre());
-				insertProduit.setDouble(8, produit.getFibre());
-				insertProduit.setDouble(9, produit.getProteine());
-				insertProduit.setDouble(10, produit.getSel());
-				insertProduit.executeUpdate();
-			}
-			ConnectionUtils.doCommit();
-		} catch (SQLException e) {
-			ConnectionUtils.doRollback();
-			throw new TechnicalException("probleme d'insertion en base de données", e);
-		} finally {
-			if (insertProduit != null) {
-				try {
-					insertProduit.close();
-				} catch (SQLException e) {
-					throw new TechnicalException("impossible de fermer le preparedStatement", e);
-				}
-			}
-			ConnectionUtils.doClose();
-		}
-
-	}
-
-	/**
-	 * Récupère la liste des grandes nutritionnels de la base de données et la
+	 * Récupère la liste des grades nutritionnels de la base de données et la
 	 * retourne.
 	 * 
-	 * @return : liste sans doublons des grades
+	 * @return : List<String> liste sans doublons des grades
 	 */
 	public List<String> recupererDifferentsGradesNutritionnels() {
 		PreparedStatement preparedStatement = null;
@@ -92,9 +51,7 @@ public class ProduitDao {
 			while (resultSet.next()) {
 				String nom = resultSet.getString("PDT_NUTRITIONGRADE");
 				listeGrades.add(nom);
-				System.out.println(resultSet.getString("PDT_NUTRITIONGRADE"));
 			}
-			System.out.println(listeGrades.get(0));
 			return listeGrades;
 
 		} catch (SQLException e) {
@@ -124,8 +81,8 @@ public class ProduitDao {
 	/**
 	 * Retourne une liste des produits contenant leurs informations essentielles.
 	 * 
-	 * @param criteres : les tables concernées
-	 * @return : liste des produits
+	 * @param criteres : Map<String, String> les tables concernées
+	 * @return : List<Produit> liste des produits
 	 */
 	public List<Produit> recupererProduits(Map<String, String> criteres) {
 		PreparedStatement preparedStatement = null;
@@ -163,7 +120,6 @@ public class ProduitDao {
 			selectQuerySb.append(" AND ");
 		}
 		selectQuerySb.append("PDT_FIBRE >= 0 LIMIT 100;");
-		System.out.println(selectQuerySb);
 		String selectQuery = selectQuerySb.toString();
 
 		try {

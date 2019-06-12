@@ -106,14 +106,12 @@
 		// AFFICHER LA MODALE AVEC LES INGREDIENTS
 		$(".nomProduit").click(event, () => {
 			let elementId = event.target.getAttribute("data-index");
-			console.log(elementId);
 
 			// RECUPERER LES INGREDIENTS ET LES INSERER DANS LA MODAL (AJAX)
 			$.ajax({
 				url: "http://localhost:8080/off-web/rechercher/resultats/ingredients?id=" + elementId,
 				dataType: 'json', // parses JSON
 				success: function (result) {
-					console.log(result);
 					let html = "<h2>Ingredients</h2><ul>";
 					result.forEach((ingredient) => {
 						html += "<li>" + ingredient + "</li>";

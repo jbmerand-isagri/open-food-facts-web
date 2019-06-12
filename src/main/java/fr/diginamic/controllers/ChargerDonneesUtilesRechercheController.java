@@ -19,6 +19,9 @@ import fr.diginamic.dao.ProduitDao;
 import fr.diginamic.exception.TechnicalException;
 import fr.diginamic.utils.ConnectionUtils;
 
+/**
+ * Servlet de chargement de la page de recherche des produits.
+ */
 @WebServlet(urlPatterns = "/rechercher")
 public class ChargerDonneesUtilesRechercheController extends HttpServlet {
 

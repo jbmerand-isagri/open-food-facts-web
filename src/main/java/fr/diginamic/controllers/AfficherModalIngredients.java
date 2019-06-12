@@ -18,6 +18,10 @@ import fr.diginamic.dao.IngredientDao;
 import fr.diginamic.exception.TechnicalException;
 import fr.diginamic.utils.ConnectionUtils;
 
+/**
+ * Servlet pour insérer la liste des ingrédients dans la modale de la page des
+ * résultats.
+ */
 @WebServlet(urlPatterns = "/rechercher/resultats/ingredients")
 public class AfficherModalIngredients extends HttpServlet {
 
@@ -41,9 +45,6 @@ public class AfficherModalIngredients extends HttpServlet {
 
 		IngredientDao ingredientDao = new IngredientDao();
 		List<String> listeDesIngredients = ingredientDao.recupererIngredientsDUnProduit(idDuProduit);
-
-		System.out.println(idDuProduit);
-		System.out.println(listeDesIngredients);
 
 		String json = new Gson().toJson(listeDesIngredients);
 

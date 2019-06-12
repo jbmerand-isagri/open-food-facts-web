@@ -19,6 +19,9 @@ import fr.diginamic.exception.TechnicalException;
 import fr.diginamic.model.Produit;
 import fr.diginamic.utils.ConnectionUtils;
 
+/**
+ * Servlet de chargement de la page des résultats de la recherche de produits.
+ */
 @WebServlet(urlPatterns = "/rechercher/resultats")
 public class AfficherResultatsRechercheController extends HttpServlet {
 
@@ -59,7 +62,6 @@ public class AfficherResultatsRechercheController extends HttpServlet {
 
 		// stockage des paramètres dans une map
 		Map<String, String> mapDesCriteres = new HashMap<>();
-		System.out.println("cateID = " + categorieId);
 
 		if (marqueId != null && !marqueId.isEmpty() && !marqueId.contentEquals("null"))
 			mapDesCriteres.put("PDT_MARQUE", marqueId);

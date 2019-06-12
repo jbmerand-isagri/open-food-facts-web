@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 import fr.diginamic.exception.TechnicalException;
 import fr.diginamic.utils.ConnectionUtils;
 
+/**
+ * Servlet chargeant la page d'ajout d'un produit dans la base de données.
+ */
 @WebServlet(urlPatterns = "/ajouter")
 public class AfficherPageAjouter extends HttpServlet {
 
