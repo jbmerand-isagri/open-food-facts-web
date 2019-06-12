@@ -38,6 +38,7 @@ public class ChargerDonneesUtilesRechercheController extends HttpServlet {
 			throw new TechnicalException("Impossible de charger le driver.", e1);
 		}
 
+		// chargement des données utiles de la base de données
 		ProduitDao produitDao = new ProduitDao();
 		List<String> gradesList = produitDao.recupererDifferentsGradesNutritionnels();
 
@@ -46,10 +47,6 @@ public class ChargerDonneesUtilesRechercheController extends HttpServlet {
 
 		MarqueDao marqueDao = new MarqueDao();
 		Map<Integer, String> marquesMap = marqueDao.recupererToutesMarques();
-
-		System.out.println(gradesList.get(0));
-		SERVICE_LOG.info("Chargement des données utiles de la bdd.");
-		System.out.println("Chargement des données utiles de la bdd.");
 
 		request.setAttribute("listeDesGrades", gradesList);
 		request.setAttribute("mapDesCategories", categoriesMap);

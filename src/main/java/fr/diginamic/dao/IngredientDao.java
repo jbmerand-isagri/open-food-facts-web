@@ -3,8 +3,10 @@ package fr.diginamic.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,5 +157,51 @@ public class IngredientDao {
 			ConnectionUtils.doClose();
 		}
 
+	}
+
+	public List<String> recupererIngredientsDUnProduit(Integer idDuProduit) {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		List<String> listeDesIngredients = new ArrayList<>();
+
+		// création de la requête requête
+		StringBuilder selectQuerySb = new StringBuilder();
+		selectQuerySb.append(
+				"SELECT ING_NOM FROM ingredient INNER JOIN produit_ingredient ON ingredient.ING_ID = produit_ingredient.PI_IDINGREDIENT INNER JOIN produit ON produit_ingredient.PI_IDPRODUIT = produit.PDT_ID WHERE PI_IDPRODUIT = ");
+		selectQuerySb.append(idDuProduit + ";");
+		String selectQuery = selectQuerySb.toString();
+
+		try {
+			preparedStatement = ConnectionUtils.getInstance().prepareStatement(selectQuery);
+			resultSet = preparedStatement.executeQuery();
+			ConnectionUtils.doCommit();
+			while (resultSet.next()) {
+				String ingredientNom = resultSet.getString("ING_NOM");
+				listeDesIngredients.add(ingredientNom);
+			}
+			return listeDesIngredients;
+		} catch (SQLException e) {
+			SERVICE_LOG.error("probleme de selection en base", e);
+			throw new TechnicalException("probleme de selection en base", e);
+
+		} finally {
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+					SERVICE_LOG.error("impossible de fermer le resultSet", e);
+					throw new TechnicalException("impossible de fermer le resultSet", e);
+				}
+			}
+			if (preparedStatement != null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException e) {
+					SERVICE_LOG.error("impossible de fermer le statement", e);
+					throw new TechnicalException("impossible de fermer le statement", e);
+				}
+			}
+			ConnectionUtils.doClose();
+		}
 	}
 }

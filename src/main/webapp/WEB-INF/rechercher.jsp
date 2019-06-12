@@ -16,7 +16,7 @@
 <body class="bg-light">
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">Off-web</a>
+			<a class="navbar-brand" href="http://localhost:8080/off-web">Off-web</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -25,33 +25,20 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-						<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+						<a class="nav-link" href="http://localhost:8080/off-web/rechercher">Rechercher <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Link</a>
+						<a class="nav-link" href="http://localhost:8080/off-web/ajouter">Ajouter</a>
 					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Dropdown
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">Action</a>
-							<a class="dropdown-item" href="#">Another action</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Something else here</a>
-						</div>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link disabled" href="#">Disabled</a>
-					</li>
+					<%-- <li class="nav-item">
+						<a class="nav-link disabled" href="#">Autre</a>
+					</li> --%>
 				</ul>
 			</div>
 		</nav>
 	</header>
 	<main class="p-5">
 		<section class="p-2 border border-light rounded bg-white shadow mb-3">
-
 
 			<h2 class="text-dark text-center m-3">Rechercher des produits</h2>
 			<form method="GET" action="http://localhost:8080/off-web/rechercher/resultats">
@@ -62,7 +49,7 @@
 						<% for(Map.Entry ligne : mapMarques.entrySet()) { %>
 							<option value="<%= ligne.getKey() %>"><%= ligne.getValue() %></option>
 						<% } %>
-						<option value="null" selected></option>
+						<option value="" selected></option>
 					</select>
 					<small id="marqueHelp" class="form-text text-muted">Sélectionner la marque du produit (laisser vide si inconnue).</small>
 				</div>
@@ -71,13 +58,11 @@
 					<select class="form-control" id="categorieSelect" name="categorieSelect" aria-describedby="marqueHelp">
 						<!-- TODO: Mettre ici les options parmi celles dans la bdd. -->
 						<% Map<Integer, String> mapCategories = (Map<Integer, String>)request.getAttribute("mapDesCategories"); %>
-						<%-- mapCategories.entrySet().stream().sorted(Map.Entry.comparingByValue()); --%>
-						
 						
 						<% for(Map.Entry ligne : mapCategories.entrySet()) { %>
 							<option value="<%= ligne.getKey() %>"><%= ligne.getValue() %></option>
 						<% } %>
-						<option value="null" selected></option>
+						<option value="" selected></option>
 					</select>
 					<small id="categorieHelp" class="form-text text-muted">Sélectionner la catégorie du produit (laisser vide si inconnue).</small>
 				</div>
@@ -96,7 +81,7 @@
 						<% for(String donnee : listeGrades) { %>
 							<option value="<%= donnee %>"><%= donnee.toUpperCase() %></option>
 						<% } %>
-						<option value="null" selected></option>
+						<option value="" selected></option>
 					</select>
 					<small id="gradeHelp" class="form-text text-muted">Sélectionner le grade de qualité du produit (laisser vide si inconnu).</small>
 				</div>
@@ -116,108 +101,6 @@
 				</div>
 				<div class="text-center">
 					<button type="submit" class="btn btn-dark p-3">Rechercher</button>
-				</div>
-			</form>
-
-			<h3 class="text-dark text-center m-3">Liste des produits</h2>
-				<!-- ID / NOM / CATEGORIE / MARQUE / GRADE / ENERGIE / GRAISSE / SUCRE / FIBRE / PROTEINE / SEL -->
-				<table class="table">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">First</th>
-							<th scope="col">Last</th>
-							<th scope="col">Handle</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th scope="row">1</th>
-							<td>Mark</td>
-							<td>Otto</td>
-							<td>@mdo</td>
-						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>Jacob</td>
-							<td>Thornton</td>
-							<td>@fat</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td>Larry</td>
-							<td>the Bird</td>
-							<td>@twitter</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<table class="table">
-					<thead class="thead-light">
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">First</th>
-							<th scope="col">Last</th>
-							<th scope="col">Handle</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th scope="row">1</th>
-							<td>Mark</td>
-							<td>Otto</td>
-							<td>@mdo</td>
-						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>Jacob</td>
-							<td>Thornton</td>
-							<td>@fat</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td>Larry</td>
-							<td>the Bird</td>
-							<td>@twitter</td>
-						</tr>
-					</tbody>
-				</table>
-		</section>
-		<section class="p-2 border border-light rounded bg-white shadow">
-			<h2 class="text-dark text-center m-3">Ajouter un produit</h2>
-			<form>
-				<div class="form-group">
-					<label for="marqueInput">Marque</label>
-					<input type="text" class="form-control" id="marqueInput" aria-describedby="marqueHelp"
-						placeholder="Danone">
-					<small id="marqueHelp" class="form-text text-muted">Entrer le nom de la marque du produit.</small>
-				</div>
-				<div class="form-group">
-					<label for="categorieSelect">Catégorie</label>
-					<select class="form-control" id="categorieSelect" aria-describedby="marqueHelp">
-						<!-- TODO: Mettre ici les options parmi celles dans la bdd. -->
-						<option value="danone">Danone</option>
-					</select>
-					<small id="marqueHelp" class="form-text text-muted">Sélectionner la catégorie du produit.</small>
-				</div>
-				<div class="form-group">
-					<label for="nomInput">Nom</label>
-					<input type="text" class="form-control" id="nomInput" aria-describedby="nomHelp"
-						placeholder="Crème aux oeufs">
-					<small id="nomHelp" class="form-text text-muted">Entrer le nom du produit.</small>
-				</div>
-				<!-- TODO: Mettre ici choix d'un grade nutritionnel (select) parmi ceux de la bdd. -->
-				<div class="form-group">
-					<label for="gradeSelect">Catégorie</label>
-					<select class="form-control" id="gradeSelect" aria-describedby="gradeHelp">
-						<!-- TODO: Mettre ici les options parmi celles dans la bdd. -->
-						<option value="gradeA">A</option>
-					</select>
-					<small id="gradeHelp" class="form-text text-muted">Sélectionner le grade de qualité du
-						produit.</small>
-				</div>
-				<div class="text-center">
-					<button type="submit" class="btn btn-dark p-3">Créer</button>
 				</div>
 			</form>
 		</section>

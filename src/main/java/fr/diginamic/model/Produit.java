@@ -62,6 +62,18 @@ public class Produit {
 		this.sel = TraitementDouble.recuperDouble(ligne[10]);
 	}
 
+	public Produit(Integer id, String nom, String categorie, String grade, String marque, Double energie,
+			Double graisse) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.categorie = categorie;
+		this.grade = grade;
+		this.marque = marque;
+		this.energie = energie;
+		this.graisse = graisse;
+	}
+
 	/**
 	 * Getter
 	 * 
